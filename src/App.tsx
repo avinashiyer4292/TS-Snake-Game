@@ -3,7 +3,11 @@ import "./App.css";
 
 const numRows = 50;
 const numCols = 50;
-const directions = {
+
+type directionType = {
+  [key: string]: Array<number>;
+};
+const directions: directionType = {
   U: [-1, 0],
   R: [0, 1],
   D: [1, 0],
@@ -28,8 +32,17 @@ const App: React.FC = () => {
   const directionRef = useRef(direction);
   directionRef.current = direction;
 
+  const [snakePositions, setSnakePositions] = useState([0, 0]);
+  const snakePositionsRef = useRef(snakePositions);
+  snakePositionsRef.current = snakePositions;
+
   const runGame = useCallback(() => {
     if (!gameStartedRef.current) return;
+    let newHeadX =
+      snakePositionsRef.current[0] + directions[directionRef.current][0];
+    let newHeadY =
+      snakePositionsRef.current[1] + directions[directionRef.current][1];
+
     setTimeout(runGame, 1000);
   }, []);
 
