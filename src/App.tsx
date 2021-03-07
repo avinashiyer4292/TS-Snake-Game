@@ -1,8 +1,14 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import "./App.css";
 
 const numRows = 50;
 const numCols = 50;
+const directions = {
+  U: [-1, 0],
+  R: [0, 1],
+  D: [1, 0],
+  L: [0, -1],
+};
 
 const App: React.FC = () => {
   const [grid, setGrid] = useState(() => {
@@ -15,9 +21,15 @@ const App: React.FC = () => {
   });
 
   const [gameStarted, setGameStarted] = useState(false);
+  const gameStartedRef = useRef(gameStarted);
+  gameStartedRef.current = gameStarted;
+
+  const [direction, setDirection] = useState("R");
+  const directionRef = useRef(direction);
+  directionRef.current = direction;
 
   const runGame = useCallback(() => {
-    if (!gameStarted) return;
+    if (!gameStartedRef.current) return;
     setTimeout(runGame, 1000);
   }, []);
 
@@ -30,6 +42,18 @@ const App: React.FC = () => {
       >
         Start Game
       </button>
+      <div className="controls-container">
+        <div>
+          <button disabled={gameStarted && direction === "U"}>Up</button>
+        </div>
+        <div>
+          <button disabled={gameStarted && direction === "L"}>Left</button>
+          <button disabled={gameStarted && direction === "R"}>Right</button>
+        </div>
+        <div>
+          <button disabled={gameStarted && direction === "D"}>Down</button>
+        </div>
+      </div>
       <div
         style={{
           display: "grid",
