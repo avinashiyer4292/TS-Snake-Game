@@ -1,3 +1,21 @@
 .App {
   text-align: center;
 }
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.controls-container div:first-child,
+.controls-container div:last-child {
+  display: flex;
+  justify-content: center;
+}
+
+.controls-container div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
