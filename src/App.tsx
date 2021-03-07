@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import "./App.css";
 
 const numRows = 50;
@@ -13,22 +13,45 @@ const App: React.FC = () => {
     console.log(rows);
     return rows;
   });
+
+  const [gameStarted, setGameStarted] = useState(false);
+
+  const runGame = useCallback(() => {
+    if (!gameStarted) return;
+    setTimeout(runGame, 1000);
+  }, []);
+
   return (
-    <div className="grid">
-      {grid.map((rows, i) =>
-        rows.map((cols, j) => (
-          <div
-            key={`${i}${j}`}
-            style={{
-              width: 20,
-              height: 20,
-              border: "1px solid black",
-              backgroundColor: grid[i][j] ? "red" : undefined,
-            }}
-          />
-        ))
-      )}
-    </div>
+    <>
+      <button
+        onClick={() => {
+          setGameStarted(!gameStarted);
+        }}
+      >
+        Start Game
+      </button>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+        }}
+      >
+        {grid.map((rows, i) =>
+          rows.map((cols, j) => (
+            <div
+              key={`${i}${j}`}
+              style={{
+                width: 20,
+                height: 20,
+                border: "0.1px solid green",
+                margin: "2px",
+                backgroundColor: grid[i][j] ? "red" : undefined,
+              }}
+            />
+          ))
+        )}
+      </div>
+    </>
   );
 };
 
