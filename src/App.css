@@ -19,3 +19,23 @@
   justify-content: center;
   align-content: space-between;
 }
+.grid {
+  width: 20px;
+  height: 20px;
+}
+
+.grid-border-top {
+  border-top: 1px solid black;
+}
+
+.grid-border-bottom {
+  border-bottom: 1px solid black;
+}
+
+.grid-border-left {
+  border-left: 1px solid black;
+}
+
+.grid-border-right {
+  border-right: 1px solid black;
+}
