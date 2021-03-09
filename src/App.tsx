@@ -4,10 +4,14 @@ import produce from "immer";
 
 const numRows = 20;
 const numCols = 20;
+const defaultTimeout = 500;
+const defaultDirection = "R";
+const defaultSnakePosition = [0, 0];
 
 type directionType = {
   [key: string]: Array<number>;
 };
+
 const directions: directionType = {
   U: [-1, 0],
   R: [0, 1],
@@ -30,11 +34,11 @@ const App: React.FC = () => {
   const gameStartedRef = useRef(gameStarted);
   gameStartedRef.current = gameStarted;
 
-  const [direction, setDirection] = useState("R");
+  const [direction, setDirection] = useState(defaultDirection);
   const directionRef = useRef(direction);
   directionRef.current = direction;
 
-  const [snakePositions, setSnakePositions] = useState([[0, 0]]);
+  const [snakePositions, setSnakePositions] = useState([defaultSnakePosition]);
   const snakePositionsRef = useRef(snakePositions);
   snakePositionsRef.current = snakePositions;
 
@@ -55,8 +59,8 @@ const App: React.FC = () => {
   const resetGame = () => {
     setGrid(generateGrid);
     setGameStarted(false);
-    setDirection("R");
-    setSnakePositions([[0, 0]]);
+    setDirection(defaultDirection);
+    setSnakePositions([defaultSnakePosition]);
   };
 
   const setCellColor = (cellValue: number) => {
@@ -88,7 +92,6 @@ const App: React.FC = () => {
       gameOver();
 
     //check if snake cuts itself
-    //if ()
 
     let newPos = `${newHeadX},${newHeadY}`,
       foodPos = `${foodPositionRef.current[0]},${foodPositionRef.current[1]}`;
@@ -99,17 +102,11 @@ const App: React.FC = () => {
       let newFoodPosition = generateFoodPosition();
       setFoodPosition(newFoodPosition);
       foodPositionRef.current = newFoodPosition;
-      console.log(
-        `Ate food! Now new Food position: ${newFoodPosition[0]},${newFoodPosition[1]}`
-      );
     } else if (newPos !== foodPos) {
       oldSnakePositions.pop();
     }
     oldSnakePositions.unshift([newHeadX, newHeadY]);
     snakePositionsRef.current = oldSnakePositions;
-    // console.log(
-    //   `New snake positions: ${JSON.stringify(snakePositionsRef.current)}`
-    // );
     setGrid((originalGrid) => {
       return produce(originalGrid, (copiedGrid) => {
         for (let i = 0; i < numRows; i++) {
@@ -123,8 +120,18 @@ const App: React.FC = () => {
       });
     });
 
-    setTimeout(runGame, 300);
+    setTimeout(runGame, defaultTimeout);
   }, []);
+
+  const getBorder = (row: number, col: number) => {
+    let className = " ";
+    if (row === 0) className += "grid-border-top";
+    else if (row === numRows - 1) className += "grid-border-bottom";
+    className += " "; //to separate out class name for row and col, add an extra space
+    if (col === 0) className += " " + "grid-border-left";
+    else if (col === numCols - 1) className += " " + "grid-border-right";
+    return className;
+  };
 
   return (
     <>
@@ -139,7 +146,6 @@ const App: React.FC = () => {
       >
         Start Game
       </button>
-      <button onClick={() => {}}>Add to snake</button>
       <button
         onClick={() => {
           resetGame();
@@ -189,14 +195,11 @@ const App: React.FC = () => {
           rows.map((cols, j) => (
             <div
               key={`${i}${j}`}
+              className={`grid ${getBorder(i, j)}`}
               style={{
-                width: 20,
-                height: 20,
-                border: "0.01px solid green",
-                margin: "2px",
                 backgroundColor: setCellColor(grid[i][j]),
               }}
-            />
+            ></div>
           ))
         )}
       </div>
