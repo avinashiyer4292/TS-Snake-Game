@@ -75,6 +75,14 @@ const App: React.FC = () => {
     return;
   };
 
+  const isSnakeInBounds = (x: number, y: number) => {
+    return x >= 0 && x < numRows && y >= 0 && y < numCols;
+  };
+
+  const doesSnakeCutItself = (x: number, y: number) => {
+    return snakePositionsRef.current.some(([i, j]) => x == i && y == j);
+  };
+
   const runGame = useCallback(() => {
     if (!gameStartedRef.current) return;
     const newHeadX: number =
@@ -83,15 +91,10 @@ const App: React.FC = () => {
       snakePositionsRef.current[0][1] + directions[directionRef.current][1];
 
     //check for bounds
-    if (
-      newHeadX < 0 ||
-      newHeadX >= numRows ||
-      newHeadY < 0 ||
-      newHeadY >= numCols
-    )
-      gameOver();
+    if (!isSnakeInBounds(newHeadX, newHeadY)) gameOver();
 
     //check if snake cuts itself
+    if (doesSnakeCutItself(newHeadX, newHeadY)) gameOver();
 
     let newPos = `${newHeadX},${newHeadY}`,
       foodPos = `${foodPositionRef.current[0]},${foodPositionRef.current[1]}`;
@@ -128,8 +131,8 @@ const App: React.FC = () => {
     if (row === 0) className += "grid-border-top";
     else if (row === numRows - 1) className += "grid-border-bottom";
     className += " "; //to separate out class name for row and col, add an extra space
-    if (col === 0) className += " " + "grid-border-left";
-    else if (col === numCols - 1) className += " " + "grid-border-right";
+    if (col === 0) className += "grid-border-left";
+    else if (col === numCols - 1) className += "grid-border-right";
     return className;
   };
 
