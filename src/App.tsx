@@ -8,6 +8,13 @@ const defaultTimeout = 500;
 const defaultDirection = "R";
 const defaultSnakePosition = [0, 0];
 
+enum ArrowKeys {
+  Down = "ArrowDown",
+  Up = "ArrowUp",
+  Left = "ArrowLeft",
+  Right = "ArrowRight",
+}
+
 type directionType = {
   [key: string]: Array<number>;
 };
@@ -27,63 +34,88 @@ const generateGrid = () => {
   return rows;
 };
 
+/** Get a random cell on grid for displaying food */
+const generateFoodPosition = () => {
+  let newFoodPositionX = Math.floor(Math.random() * numRows);
+  let newFoodPositionY = Math.floor(Math.random() * numCols);
+  return [newFoodPositionX, newFoodPositionY];
+};
+
+/** Get the value for cell background color
+ * Red: Occupied by snake
+ * Blue: Food position
+ */
+const setCellColor = (cellValue: number) => {
+  if (cellValue === 1) return "red";
+  if (cellValue === 2) return "blue";
+  return undefined;
+};
+
 const App: React.FC = () => {
   const [grid, setGrid] = useState(generateGrid);
 
+  /** Game started ref */
   const [gameStarted, setGameStarted] = useState(false);
   const gameStartedRef = useRef(gameStarted);
   gameStartedRef.current = gameStarted;
 
+  /** Snake direction red */
   const [direction, setDirection] = useState(defaultDirection);
   const directionRef = useRef(direction);
   directionRef.current = direction;
 
+  /** Snake positions ref */
   const [snakePositions, setSnakePositions] = useState([defaultSnakePosition]);
   const snakePositionsRef = useRef(snakePositions);
   snakePositionsRef.current = snakePositions;
 
-  const generateFoodPosition = () => {
-    let newFoodPositionX = Math.floor(Math.random() * numRows);
-    let newFoodPositionY = Math.floor(Math.random() * numCols);
-    return [newFoodPositionX, newFoodPositionY];
-  };
-
+  /** Random food positions ref */
   const [foodPosition, setFoodPosition] = useState(generateFoodPosition);
   const foodPositionRef = useRef(foodPosition);
   foodPositionRef.current = foodPosition;
 
-  const [isFoodPresent, setIsFoodPresent] = useState(false);
-  const isFoodPresentRef = useRef(isFoodPresent);
-  isFoodPresentRef.current = isFoodPresent;
-
+  /** Util functions */
+  /** Reset game , set all to default */
   const resetGame = () => {
     setGrid(generateGrid);
     setGameStarted(false);
     setDirection(defaultDirection);
     setSnakePositions([defaultSnakePosition]);
+    window.removeEventListener("keydown", handleArrowKey);
   };
 
-  const setCellColor = (cellValue: number) => {
-    if (cellValue === 1) return "red";
-    if (cellValue === 2) return "blue";
-    return undefined;
-  };
-
+  /** Game over and reset game */
   const gameOver = () => {
     alert("Game Over!!!");
     resetGame();
     return;
   };
 
+  /** Is snake within grid bounds */
   const isSnakeInBounds = (x: number, y: number) => {
     return x >= 0 && x < numRows && y >= 0 && y < numCols;
   };
 
+  /** Does snake cut itself while moving */
   const doesSnakeCutItself = (x: number, y: number) => {
-    return snakePositionsRef.current.some(([i, j]) => x == i && y == j);
+    return snakePositionsRef.current.some(([i, j]) => x === i && y === j);
   };
 
+  const handleArrowKey = (e: KeyboardEvent) => {
+    if (e.key === ArrowKeys.Down) setDirection("D");
+    else if (e.key === ArrowKeys.Up) setDirection("U");
+    else if (e.key === ArrowKeys.Left) setDirection("L");
+    else if (e.key === ArrowKeys.Right) setDirection("R");
+    else e.preventDefault();
+  };
+
+  /** The main method; handles logic:
+   * 1. Checks whether next position of snake is valid
+   * 2. Checks if snake gets the food and handles length
+   * 3. Runs the game in a loop
+   */
   const runGame = useCallback(() => {
+    window.addEventListener("keydown", handleArrowKey);
     if (!gameStartedRef.current) return;
     const newHeadX: number =
       snakePositionsRef.current[0][0] + directions[directionRef.current][0];
@@ -124,7 +156,7 @@ const App: React.FC = () => {
     });
 
     setTimeout(runGame, defaultTimeout);
-  }, []);
+  }, [gameStarted]);
 
   const getBorder = (row: number, col: number) => {
     let className = " ";
