@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import "./App.css";
 import produce from "immer";
 
@@ -27,35 +27,43 @@ const generateGrid = () => {
   return rows;
 };
 
+const generateFoodPosition = () => {
+  let newFoodPositionX = Math.floor(Math.random() * numRows);
+  let newFoodPositionY = Math.floor(Math.random() * numCols);
+  return [newFoodPositionX, newFoodPositionY];
+};
+
+const setCellColor = (cellValue: number) => {
+  if (cellValue === 1) return "red";
+  if (cellValue === 2) return "blue";
+  return undefined;
+};
+
 const App: React.FC = () => {
   const [grid, setGrid] = useState(generateGrid);
 
+  /** Game started ref */
   const [gameStarted, setGameStarted] = useState(false);
   const gameStartedRef = useRef(gameStarted);
   gameStartedRef.current = gameStarted;
 
+  /** Snake direction red */
   const [direction, setDirection] = useState(defaultDirection);
   const directionRef = useRef(direction);
   directionRef.current = direction;
 
+  /** Snake positions ref */
   const [snakePositions, setSnakePositions] = useState([defaultSnakePosition]);
   const snakePositionsRef = useRef(snakePositions);
   snakePositionsRef.current = snakePositions;
 
-  const generateFoodPosition = () => {
-    let newFoodPositionX = Math.floor(Math.random() * numRows);
-    let newFoodPositionY = Math.floor(Math.random() * numCols);
-    return [newFoodPositionX, newFoodPositionY];
-  };
-
+  /** Random food positions ref */
   const [foodPosition, setFoodPosition] = useState(generateFoodPosition);
   const foodPositionRef = useRef(foodPosition);
   foodPositionRef.current = foodPosition;
 
-  const [isFoodPresent, setIsFoodPresent] = useState(false);
-  const isFoodPresentRef = useRef(isFoodPresent);
-  isFoodPresentRef.current = isFoodPresent;
-
+  /** Util functions */
+  /** Reset game , set all to default */
   const resetGame = () => {
     setGrid(generateGrid);
     setGameStarted(false);
@@ -63,26 +71,28 @@ const App: React.FC = () => {
     setSnakePositions([defaultSnakePosition]);
   };
 
-  const setCellColor = (cellValue: number) => {
-    if (cellValue === 1) return "red";
-    if (cellValue === 2) return "blue";
-    return undefined;
-  };
-
+  /** Game over and reset game */
   const gameOver = () => {
     alert("Game Over!!!");
     resetGame();
     return;
   };
 
+  /** Is snake within grid bounds */
   const isSnakeInBounds = (x: number, y: number) => {
     return x >= 0 && x < numRows && y >= 0 && y < numCols;
   };
 
+  /** Does snake cut itself while moving */
   const doesSnakeCutItself = (x: number, y: number) => {
     return snakePositionsRef.current.some(([i, j]) => x == i && y == j);
   };
 
+  /** The main method; handles logic:
+   * 1. Checks whether next position of snake is valid
+   * 2. Checks if snake gets the food and handles length
+   * 3. Runs the game in a loop
+   */
   const runGame = useCallback(() => {
     if (!gameStartedRef.current) return;
     const newHeadX: number =
