@@ -116,7 +116,7 @@ const App: React.FC = () => {
           for (let j = 0; j < numCols; j++) copiedGrid[i][j] = 0;
         }
         snakePositionsRef.current.forEach(([x, y]) => {
-          copiedGrid[x][y] = 1;
+          if (isSnakeInBounds(x, y)) copiedGrid[x][y] = 1;
         });
         copiedGrid[foodPositionRef.current[0]][foodPositionRef.current[1]] = 2;
         return copiedGrid;
