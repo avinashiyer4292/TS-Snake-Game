@@ -34,12 +34,17 @@ const generateGrid = () => {
   return rows;
 };
 
+/** Get a random cell on grid for displaying food */
 const generateFoodPosition = () => {
   let newFoodPositionX = Math.floor(Math.random() * numRows);
   let newFoodPositionY = Math.floor(Math.random() * numCols);
   return [newFoodPositionX, newFoodPositionY];
 };
 
+/** Get the value for cell background color
+ * Red: Occupied by snake
+ * Blue: Food
+ */
 const setCellColor = (cellValue: number) => {
   if (cellValue === 1) return "red";
   if (cellValue === 2) return "blue";
