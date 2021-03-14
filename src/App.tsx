@@ -8,6 +8,13 @@ const defaultTimeout = 500;
 const defaultDirection = "R";
 const defaultSnakePosition = [0, 0];
 
+enum ArrowKeys {
+  Down = "ArrowDown",
+  Up = "ArrowUp",
+  Left = "ArrowLeft",
+  Right = "ArrowRight",
+}
+
 type directionType = {
   [key: string]: Array<number>;
 };
@@ -88,12 +95,22 @@ const App: React.FC = () => {
     return snakePositionsRef.current.some(([i, j]) => x == i && y == j);
   };
 
+  const handleArrowKey = (e: KeyboardEvent) => {
+    console.log(`Key pressed: ${e.key}`);
+    if (e.key === ArrowKeys.Down) setDirection("D");
+    else if (e.key === ArrowKeys.Up) setDirection("U");
+    else if (e.key === ArrowKeys.Left) setDirection("L");
+    else if (e.key === ArrowKeys.Right) setDirection("R");
+    else return;
+  };
+
   /** The main method; handles logic:
    * 1. Checks whether next position of snake is valid
    * 2. Checks if snake gets the food and handles length
    * 3. Runs the game in a loop
    */
   const runGame = useCallback(() => {
+    window.addEventListener("keydown", handleArrowKey);
     if (!gameStartedRef.current) return;
     const newHeadX: number =
       snakePositionsRef.current[0][0] + directions[directionRef.current][0];
