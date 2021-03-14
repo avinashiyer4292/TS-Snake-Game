@@ -160,7 +160,7 @@ const App: React.FC = () => {
         <div>
           <button
             onClick={() => setDirection("U")}
-            disabled={gameStarted && direction === "U"}
+            disabled={gameStarted && (direction === "U" || direction === "D")}
           >
             Up
           </button>
@@ -168,13 +168,13 @@ const App: React.FC = () => {
         <div>
           <button
             onClick={() => setDirection("L")}
-            disabled={gameStarted && direction === "L"}
+            disabled={gameStarted && (direction === "L" || direction === "R")}
           >
             Left
           </button>
           <button
             onClick={() => setDirection("R")}
-            disabled={gameStarted && direction === "R"}
+            disabled={gameStarted && (direction === "L" || direction === "R")}
           >
             Right
           </button>
@@ -182,7 +182,7 @@ const App: React.FC = () => {
         <div>
           <button
             onClick={() => setDirection("D")}
-            disabled={gameStarted && direction === "D"}
+            disabled={gameStarted && (direction === "U" || direction === "D")}
           >
             Down
           </button>
