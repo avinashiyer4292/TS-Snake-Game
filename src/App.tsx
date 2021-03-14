@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import "./App.css";
 import produce from "immer";
 
@@ -76,6 +76,7 @@ const App: React.FC = () => {
     setGameStarted(false);
     setDirection(defaultDirection);
     setSnakePositions([defaultSnakePosition]);
+    window.removeEventListener("keydown", handleArrowKey);
   };
 
   /** Game over and reset game */
@@ -92,7 +93,7 @@ const App: React.FC = () => {
 
   /** Does snake cut itself while moving */
   const doesSnakeCutItself = (x: number, y: number) => {
-    return snakePositionsRef.current.some(([i, j]) => x == i && y == j);
+    return snakePositionsRef.current.some(([i, j]) => x === i && y === j);
   };
 
   const handleArrowKey = (e: KeyboardEvent) => {
@@ -101,7 +102,7 @@ const App: React.FC = () => {
     else if (e.key === ArrowKeys.Up) setDirection("U");
     else if (e.key === ArrowKeys.Left) setDirection("L");
     else if (e.key === ArrowKeys.Right) setDirection("R");
-    else return;
+    else e.preventDefault();
   };
 
   /** The main method; handles logic:
@@ -151,7 +152,7 @@ const App: React.FC = () => {
     });
 
     setTimeout(runGame, defaultTimeout);
-  }, []);
+  }, [gameStarted]);
 
   const getBorder = (row: number, col: number) => {
     let className = " ";
