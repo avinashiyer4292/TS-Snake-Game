@@ -97,7 +97,6 @@ const App: React.FC = () => {
   };
 
   const handleArrowKey = (e: KeyboardEvent) => {
-    console.log(`Key pressed: ${e.key}`);
     if (e.key === ArrowKeys.Down) setDirection("D");
     else if (e.key === ArrowKeys.Up) setDirection("U");
     else if (e.key === ArrowKeys.Left) setDirection("L");
