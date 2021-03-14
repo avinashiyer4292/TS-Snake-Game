@@ -43,7 +43,7 @@ const generateFoodPosition = () => {
 
 /** Get the value for cell background color
  * Red: Occupied by snake
- * Blue: Food
+ * Blue: Food position
  */
 const setCellColor = (cellValue: number) => {
   if (cellValue === 1) return "red";
