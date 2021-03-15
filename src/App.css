@@ -39,3 +39,16 @@
 .grid-border-right {
   border-right: 1px solid black;
 }
+
+button {
+  background-color: #00dcff;
+  color: white;
+  cursor: pointer;
+  border: 1px solid #ffeb3b;
+  border-width: thick;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 28px;
+  height: 40px;
+  width: 70px;
+}

@@ -170,6 +170,7 @@ const App: React.FC = () => {
 
   return (
     <>
+      <h1>Welcome to Snake Game!</h1>
       <button
         onClick={() => {
           setGameStarted(!gameStarted);
