@@ -170,24 +170,30 @@ const Game: React.FC = () => {
 
   return (
     <div className="game">
-      <button
-        onClick={() => {
-          setGameStarted(!gameStarted);
-          if (!gameStarted) {
-            gameStartedRef.current = true;
-            runGame();
-          }
-        }}
-      >
-        Start Game
-      </button>
-      <button
-        onClick={() => {
-          resetGame();
-        }}
-      >
-        Stop
-      </button>
+      <div className="game-status-controls-container">
+        <div className="game-status-control">
+          <button
+            onClick={() => {
+              setGameStarted(!gameStarted);
+              if (!gameStarted) {
+                gameStartedRef.current = true;
+                runGame();
+              }
+            }}
+          >
+            Start
+          </button>
+        </div>
+        <div className="game-status-control">
+          <button
+            onClick={() => {
+              resetGame();
+            }}
+          >
+            Stop
+          </button>
+        </div>
+      </div>
       <div className="controls-container">
         <div>
           <button
