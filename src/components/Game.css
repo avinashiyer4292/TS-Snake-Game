@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.game-status-controls-container {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+}
+
 .controls-container {
   display: flex;
   flex-direction: column;
