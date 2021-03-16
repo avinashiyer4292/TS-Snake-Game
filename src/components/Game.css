@@ -24,9 +24,14 @@
 
 .controls-container div:nth-child(2) {
   display: flex;
-  justify-content: center;
-  align-content: space-between;
+  justify-content: space-evenly;
+  width: 100%;
 }
+
+.controls-container button {
+  width: 40px;
+}
+
 .grid {
   width: 20px;
   height: 20px;
