@@ -1,0 +1,59 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.controls-container div:first-child,
+.controls-container div:last-child {
+  display: flex;
+  justify-content: center;
+}
+
+.controls-container div:nth-child(2) {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
+.grid {
+  width: 20px;
+  height: 20px;
+}
+
+.grid-board {
+  box-shadow: 0 0 10px 1px #3b21ca;
+}
+
+.grid-border-top {
+  /** border-top: 1px solid black;*/
+}
+
+.grid-border-bottom {
+  /** border-bottom: 1px solid black;*/
+}
+
+.grid-border-left {
+  /** border-left: 1px solid black;*/
+}
+
+.grid-border-right {
+  /** border-right: 1px solid black;*/
+}
+
+button {
+  background-color: white;
+  color: #3b21ca;
+  cursor: pointer;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 28px;
+  height: 40px;
+  width: 70px;
+  box-shadow: 0 0 10px 1px #3b21ca;
+}
