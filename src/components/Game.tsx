@@ -194,6 +194,25 @@ const Game: React.FC = () => {
           </button>
         </div>
       </div>
+      <div
+        className="grid-board"
+        style={{
+          display: "grid",
+          gridTemplateColumns: `repeat(${numCols}, 20px)`,
+        }}
+      >
+        {grid.map((rows, i) =>
+          rows.map((cols, j) => (
+            <div
+              key={`${i}${j}`}
+              className={`grid ${getBorder(i, j)}`}
+              style={{
+                backgroundColor: setCellColor(grid[i][j]),
+              }}
+            ></div>
+          ))
+        )}
+      </div>
       <div className="controls-container">
         <div>
           <button
@@ -225,25 +244,6 @@ const Game: React.FC = () => {
             {"V"}
           </button>
         </div>
-      </div>
-      <div
-        className="grid-board"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`,
-        }}
-      >
-        {grid.map((rows, i) =>
-          rows.map((cols, j) => (
-            <div
-              key={`${i}${j}`}
-              className={`grid ${getBorder(i, j)}`}
-              style={{
-                backgroundColor: setCellColor(grid[i][j]),
-              }}
-            ></div>
-          ))
-        )}
       </div>
     </div>
   );
