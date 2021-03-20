@@ -32,6 +32,12 @@
   width: 40px;
 }
 
+.controls-container button:disabled {
+  background-color: silver;
+  box-shadow: none;
+  border-color: #3b21ca;
+}
+
 .grid {
   width: 20px;
   height: 20px;
