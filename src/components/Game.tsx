@@ -102,11 +102,19 @@ const Game: React.FC = () => {
   };
 
   const handleArrowKey = (e: KeyboardEvent) => {
-    if (e.key === ArrowKeys.Down) setDirection("D");
-    else if (e.key === ArrowKeys.Up) setDirection("U");
-    else if (e.key === ArrowKeys.Left) setDirection("L");
-    else if (e.key === ArrowKeys.Right) setDirection("R");
-    else e.preventDefault();
+    if (e.key === ArrowKeys.Down) {
+      if (directionRef.current === "L" || directionRef.current === "R")
+        setDirection("D");
+    } else if (e.key === ArrowKeys.Up) {
+      if (directionRef.current === "L" || directionRef.current === "R")
+        setDirection("U");
+    } else if (e.key === ArrowKeys.Left) {
+      if (directionRef.current === "U" || directionRef.current === "D")
+        setDirection("L");
+    } else if (e.key === ArrowKeys.Right) {
+      if (directionRef.current === "U" || directionRef.current === "D")
+        setDirection("R");
+    } else e.preventDefault();
   };
 
   /** The main method; handles logic:
