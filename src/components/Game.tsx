@@ -13,8 +13,8 @@ type ColorType = {
 };
 
 const Color: ColorType = {
-  Snake: "#4ce5fa",
-  Food: "#8fd3ae",
+  Snake: "#fbc419",
+  Food: "#0ab604",
   Default: "white",
 };
 
@@ -56,8 +56,8 @@ const generateFoodPosition = () => {
  * Blue: Food position
  */
 const setCellColor = (cellValue: number) => {
-  if (cellValue === 1) return "#fbc419";
-  if (cellValue === 2) return "#0ab604";
+  if (cellValue === 1) return Color["Snake"];
+  if (cellValue === 2) return Color["Food"];
   return undefined;
 };
 
@@ -175,16 +175,6 @@ const Game: React.FC = () => {
 
     setTimeout(runGame, defaultTimeout);
   }, [gameStarted]);
-
-  //   const getBorder = (row: number, col: number) => {
-  //     let className = " ";
-  //     if (row === 0) className += "grid-border-top";
-  //     else if (row === numRows - 1) className += "grid-border-bottom";
-  //     className += " "; //to separate out class name for row and col, add an extra space
-  //     if (col === 0) className += "grid-border-left";
-  //     else if (col === numCols - 1) className += "grid-border-right";
-  //     return className;
-  //   };
 
   return (
     <div className="game">
