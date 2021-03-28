@@ -2,53 +2,6 @@
   text-align: center;
 }
 
-.controls-container {
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-}
-
-.controls-container div:first-child,
-.controls-container div:last-child {
-  display: flex;
-  justify-content: center;
-}
-
-.controls-container div:nth-child(2) {
-  display: flex;
-  justify-content: center;
-  align-content: space-between;
-}
-.grid {
-  width: 20px;
-  height: 20px;
-}
-
-.grid-border-top {
-  border-top: 1px solid black;
-}
-
-.grid-border-bottom {
-  border-bottom: 1px solid black;
-}
-
-.grid-border-left {
-  border-left: 1px solid black;
-}
-
-.grid-border-right {
-  border-right: 1px solid black;
-}
-
-button {
-  background-color: #00dcff;
-  color: white;
-  cursor: pointer;
-  border: 1px solid #ffeb3b;
-  border-width: thick;
-  border-radius: 20px;
-  font-family: inherit;
+.App p {
   font-size: 28px;
-  height: 40px;
-  width: 70px;
 }
