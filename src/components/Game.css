@@ -1,0 +1,66 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-status-controls-container {
+  display: flex;
+  width: 50%;
+  justify-content: space-evenly;
+}
+
+.controls-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.controls-container div:first-child,
+.controls-container div:last-child {
+  display: flex;
+  justify-content: center;
+}
+
+.controls-container div:nth-child(2) {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.controls-container button {
+  width: 40px;
+}
+
+.controls-container button:disabled {
+  background-color: silver;
+  box-shadow: none;
+  border-color: #3b21ca;
+}
+
+.grid {
+  width: 20px;
+  height: 20px;
+}
+
+.grid-board {
+  box-shadow: 0 0 10px 1px #3b21ca;
+  margin: 5% 0;
+}
+
+.grid-item {
+  border-radius: 5px;
+  height: 20px;
+}
+
+button {
+  background-color: white;
+  color: #3b21ca;
+  cursor: pointer;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 28px;
+  height: 40px;
+  width: 70px;
+  box-shadow: 0 0 10px 1px #3b21ca;
+}
