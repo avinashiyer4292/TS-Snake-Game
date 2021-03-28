@@ -48,20 +48,9 @@
   margin: 5% 0;
 }
 
-.grid-border-top {
-  /** border-top: 1px solid black;*/
-}
-
-.grid-border-bottom {
-  /** border-bottom: 1px solid black;*/
-}
-
-.grid-border-left {
-  /** border-left: 1px solid black;*/
-}
-
-.grid-border-right {
-  /** border-right: 1px solid black;*/
+.grid-item {
+  border-radius: 5px;
+  height: 20px;
 }
 
 button {
