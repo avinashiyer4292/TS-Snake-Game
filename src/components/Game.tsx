@@ -8,6 +8,16 @@ const defaultTimeout = 500;
 const defaultDirection = "R";
 const defaultSnakePosition = [0, 0];
 
+type ColorType = {
+  [key: string]: string;
+};
+
+const Color: ColorType = {
+  Snake: "#4ce5fa",
+  Food: "#8fd3ae",
+  Default: "white",
+};
+
 enum ArrowKeys {
   Down = "ArrowDown",
   Up = "ArrowUp",
@@ -46,8 +56,8 @@ const generateFoodPosition = () => {
  * Blue: Food position
  */
 const setCellColor = (cellValue: number) => {
-  if (cellValue === 1) return "red";
-  if (cellValue === 2) return "blue";
+  if (cellValue === 1) return "#fbc419";
+  if (cellValue === 2) return "#0ab604";
   return undefined;
 };
 
@@ -166,15 +176,15 @@ const Game: React.FC = () => {
     setTimeout(runGame, defaultTimeout);
   }, [gameStarted]);
 
-  const getBorder = (row: number, col: number) => {
-    let className = " ";
-    if (row === 0) className += "grid-border-top";
-    else if (row === numRows - 1) className += "grid-border-bottom";
-    className += " "; //to separate out class name for row and col, add an extra space
-    if (col === 0) className += "grid-border-left";
-    else if (col === numCols - 1) className += "grid-border-right";
-    return className;
-  };
+  //   const getBorder = (row: number, col: number) => {
+  //     let className = " ";
+  //     if (row === 0) className += "grid-border-top";
+  //     else if (row === numRows - 1) className += "grid-border-bottom";
+  //     className += " "; //to separate out class name for row and col, add an extra space
+  //     if (col === 0) className += "grid-border-left";
+  //     else if (col === numCols - 1) className += "grid-border-right";
+  //     return className;
+  //   };
 
   return (
     <div className="game">
@@ -213,7 +223,7 @@ const Game: React.FC = () => {
           rows.map((cols, j) => (
             <div
               key={`${i}${j}`}
-              className={`grid ${getBorder(i, j)}`}
+              className="grid-item"
               style={{
                 backgroundColor: setCellColor(grid[i][j]),
               }}
